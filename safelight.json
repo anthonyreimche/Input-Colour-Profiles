@@ -1,0 +1,26 @@
+{
+  "id": "input-colour-profiles",
+  "name": "Input Colour Profiles",
+  "version": "1.0.0",
+  "description": "Reads the ICC profile a JPEG, PNG, WebP, AVIF or TIFF carries and converts from it without clipping, so colour outside sRGB (Display P3, Adobe RGB, ProPhoto) survives into the edit. Give a photo another profile, choose how files without one are read, and add matrix profiles of your own.",
+  "author": "Anthony Reimche",
+  "main": "dist/index.js",
+  "license": "GPL-3.0-or-later",
+  "categories": [
+    "Develop",
+    "Color"
+  ],
+  "keywords": [
+    "icc",
+    "colour profile",
+    "color profile",
+    "input profile",
+    "assign profile",
+    "display p3",
+    "adobe rgb",
+    "prophoto",
+    "wide gamut"
+  ],
+  "repository": "anthonyreimche/Input-Colour-Profiles",
+  "minAppVersion": "3.2.3"
+}
