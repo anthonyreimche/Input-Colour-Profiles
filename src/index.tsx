@@ -48,6 +48,7 @@ export function activate(host: SafelightAPI): void {
     title: "Input Profile",
     component: () => <InputProfilePanel controller={active} />,
     defaultDock: { module: "develop", direction: "right" },
+    modules: ["develop"],
   });
   host.registerGridMenuItem({
     id: MENU_ID,

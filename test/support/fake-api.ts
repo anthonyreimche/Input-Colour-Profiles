@@ -40,7 +40,7 @@ type FakeMembers = Pick<
   develop: Pick<SafelightAPI["develop"], "registerInputProfiles" | "invalidateInputProfiles">;
   catalog: Pick<SafelightAPI["catalog"], "useActivePhoto" | "setInputProfile">;
   presets: Pick<SafelightAPI["presets"], "pickFile">;
-  ui: Pick<SafelightAPI["ui"], "Select" | "Button" | "Field" | "Stack" | "Row" | "tokens" | "alertDialog" | "confirmDialog">;
+  ui: Pick<SafelightAPI["ui"], "Select" | "Button" | "Field" | "Stack" | "Row" | "tokens" | "alertDialog" | "confirmDialog" | "onEscape">;
 };
 
 export interface Rig {
@@ -54,6 +54,10 @@ export interface Rig {
   /** setInputProfile calls, in order. */
   assigned: { ids: string[]; token: string | null }[];
   alerts: string[];
+  /** Handlers registered through ui.onEscape, newest last. */
+  escapeHandlers: (() => void)[];
+  /** Escape goes to the newest taker, as core does. */
+  pressEscape(): void;
   /** What the next confirmDialog answers. */
   confirmAnswer: boolean;
   /** What the next pickFile gives. */
@@ -99,6 +103,10 @@ export function fakeApi(): Rig {
     invalidations: 0,
     assigned: [],
     alerts: [],
+    escapeHandlers: [],
+    pressEscape() {
+      rig.escapeHandlers.at(-1)?.();
+    },
     confirmAnswer: true,
     nextFile: null,
     setPhotos(next, id) {
@@ -162,6 +170,10 @@ export function fakeApi(): Rig {
       tokens: TOKENS,
       alertDialog: async ({ message }) => void rig.alerts.push(message),
       confirmDialog: async () => rig.confirmAnswer,
+      onEscape(handler) {
+        rig.escapeHandlers.push(handler);
+        return () => void rig.escapeHandlers.splice(rig.escapeHandlers.indexOf(handler), 1);
+      },
     },
   };
 

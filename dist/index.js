@@ -841,12 +841,7 @@ function Je({ controller: t }) {
 	He(t);
 	let n = qe(), [r, i] = K.useState(e), { Select: a, Button: o, Row: c, Stack: l, tokens: u } = q.ui;
 	if (K.useEffect(() => {
-		if (!n) return;
-		i(e);
-		let t = (e) => {
-			e.key === "Escape" && X();
-		};
-		return window.addEventListener("keydown", t), () => window.removeEventListener("keydown", t);
+		if (n) return i(e), q.ui.onEscape(X);
 	}, [n]), !n) return null;
 	let d = n.length === 1 ? "1 photo" : `${n.length} photos`;
 	async function f() {
@@ -956,7 +951,8 @@ function tt(e) {
 		defaultDock: {
 			module: "develop",
 			direction: "right"
-		}
+		},
+		modules: ["develop"]
 	}), e.registerGridMenuItem({
 		id: $e,
 		label: (e) => e.length > 1 ? `Assign input profile… (${e.length})` : "Assign input profile…",

@@ -217,9 +217,12 @@ describe("Library dialogue", () => {
     act(() => rig.menuItems[0].onClick(["p0"]));
     await user.click(screen.getByRole("button", { name: "Cancel" }));
     expect(screen.queryByRole("dialog")).toBeNull();
+    expect(rig.escapeHandlers).toEqual([]);
     act(() => rig.menuItems[0].onClick(["p0"]));
-    await user.keyboard("{Escape}");
+    expect(rig.escapeHandlers).toHaveLength(1);
+    act(() => rig.pressEscape());
     expect(screen.queryByRole("dialog")).toBeNull();
+    expect(rig.escapeHandlers).toEqual([]);
     expect(rig.assigned).toEqual([]);
   });
 });

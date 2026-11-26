@@ -40,11 +40,7 @@ export function AssignDialog({ controller }: { controller: Controller }) {
   React.useEffect(() => {
     if (!ids) return;
     setValue(EMBEDDED);
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeAssignDialog();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return api.ui.onEscape(closeAssignDialog);
   }, [ids]);
 
   if (!ids) return null;
